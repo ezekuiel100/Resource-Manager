@@ -4,7 +4,11 @@ import path from "path";
 function createWindow() {
   const win = new BrowserWindow({});
 
-  win.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
+  if (process.env.NODE_ENV === "development") {
+    win.loadURL("http://localhost:5123");
+  } else {
+    win.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
+  }
 }
 
 app.whenReady().then(() => {
