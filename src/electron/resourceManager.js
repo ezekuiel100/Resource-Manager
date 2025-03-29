@@ -23,3 +23,13 @@ async function getRamUsage() {
   const ramUsage = await ram.info();
   return Math.floor(ramUsage.usedMemMb / 1024);
 }
+
+function getStorageUsage() {
+  const stats = fs.statfsSync("C://");
+  const total = (stats.bsize * stats.blocks) / 1e9;
+  const free = (stats.bsize * stats.bfree) / 1e9;
+
+  const usage = total - free;
+
+  return { total, free, usage };
+}
