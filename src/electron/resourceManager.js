@@ -1,21 +1,20 @@
 import osu from "node-os-utils";
-import { getDiskInfo, getDiskInfoSync } from "node-disk-info";
+import fs from "fs";
+import { webContents } from "electron";
 
 const cpu = osu.cpu;
 const ram = osu.mem;
 const os = osu.os;
 
-export function resources() {
-  setInterval(async () => {
-    const cpuUsage = await cpu.usage();
-    const ramUsage = await ram.info();
-    const disks = getDiskInfoSync();
+export async function resources() {
+  const cpu = await getCpuUsage();
+  const ram = await getRamUsage();
+  const disk = getStorageUsage();
 
-    for (const disk of disks) {
-      console.log("Total: " + disk._blocks / 1e9);
-      console.log("Usado: " + disk._used / 1e9);
-      console.log("Disponivel: " + disk._available / 1e9);
-      console.log("Capacidade usada: " + disk._capacity);
-    }
-  }, 1000);
+  return { cpu, ram, disk: disk.usage };
+}
+
+async function getCpuUsage() {
+  const cpuUsage = await cpu.usage();
+  return cpuUsage;
 }
