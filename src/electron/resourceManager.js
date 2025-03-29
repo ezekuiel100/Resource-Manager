@@ -18,3 +18,8 @@ async function getCpuUsage() {
   const cpuUsage = await cpu.usage();
   return cpuUsage;
 }
+
+async function getRamUsage() {
+  const ramUsage = await ram.info();
+  return Math.floor(ramUsage.usedMemMb / 1024);
+}
