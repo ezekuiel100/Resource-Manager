@@ -19,7 +19,7 @@ function createWindow() {
   }
 
   resources(win);
-  ipcMain.handle("static-data", () => {
+  ipcMain.handle("static-data", async () => {
     return getStaticData();
   });
 }
