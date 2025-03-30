@@ -7,12 +7,12 @@ const ram = osu.mem;
 
 const ramInfo = await ram.info();
 
-export async function resources(win) {
-  const cpu = await getCpuUsage();
-  const ram = await getRamUsage();
-  const disk = getStorageUsage();
+export function resources(win) {
+  setInterval(async () => {
+    const cpu = await getCpuUsage();
+    const ram = await getRamUsage();
+    const disk = getStorageUsage();
 
-  setInterval(() => {
     win.webContents.send("system-stats", { cpu, ram, disk: disk.total });
   }, 1000);
 }

@@ -1,23 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [cpu, setCpu] = useState(0);
+  const [ram, setRam] = useState(0);
+  const [storage, setStorage] = useState(0);
+  const [staticData, setStaticData] = useState([]);
+
+  useEffect(() => {
+    window.electron.getData((data) => {
+      setCpu(data.cpu);
+      setRam(data.ram);
+      setStorage(data.disk);
+    });
+  }, []);
 
   return (
     <>
-      <h1>React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <p>CPU: {JSON.stringify(cpu)}</p>
+      <p>RAM: {ram}</p>
+      <p>STORAGE: {storage.toFixed()}</p>
     </>
   );
 }
