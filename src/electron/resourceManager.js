@@ -1,17 +1,20 @@
 import osu from "node-os-utils";
 import fs from "fs";
-import { webContents } from "electron";
+import os from "os";
 
 const cpu = osu.cpu;
 const ram = osu.mem;
-const os = osu.os;
 
-export async function resources() {
+const ramInfo = await ram.info();
+
+export async function resources(win) {
   const cpu = await getCpuUsage();
   const ram = await getRamUsage();
   const disk = getStorageUsage();
 
-  return { cpu, ram, disk: disk.usage };
+  setInterval(() => {
+    win.webContents.send("system-stats", { cpu, ram, disk: disk.total });
+  }, 1000);
 }
 
 async function getCpuUsage() {
@@ -20,8 +23,8 @@ async function getCpuUsage() {
 }
 
 async function getRamUsage() {
-  const ramUsage = await ram.info();
-  return Math.floor(ramUsage.usedMemMb / 1024);
+  const ramInfo = await ram.info();
+  return ramInfo.freeMemPercentage;
 }
 
 function getStorageUsage() {
@@ -32,4 +35,12 @@ function getStorageUsage() {
   const usage = total - free;
 
   return { total, free, usage };
+}
+
+export function getStaticData() {
+  const totalStorage = getStorageUsage().total;
+  const cpuModel = os.cpus()[0].model;
+  const totalMemoryGB = (ramInfo.totalMemMb / 1024).toFixed(2);
+
+  return { totalStorage, cpuModel, totalMemoryGB };
 }
