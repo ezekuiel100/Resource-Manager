@@ -13,7 +13,7 @@ export function resources(win) {
     const ram = await getRamUsage();
     const disk = getStorageUsage();
 
-    win.webContents.send("system-stats", { cpu, ram, disk: disk.total });
+    win.webContents.send("system-stats", { cpu, ram, disk: disk.usage });
   }, 1000);
 }
 
@@ -24,7 +24,7 @@ async function getCpuUsage() {
 
 async function getRamUsage() {
   const ramInfo = await ram.info();
-  return ramInfo.freeMemPercentage;
+  return ramInfo.usedMemPercentage;
 }
 
 function getStorageUsage() {
