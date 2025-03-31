@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 import { useStatistic } from "./useStatistic";
 import SelectOption from "./SelectOption";
+import Chart from "./Chart";
 
 function App() {
   const [staticData, setStaticData] = useState();
@@ -54,24 +54,11 @@ function App() {
       </div>
 
       <div className="mainGrid">
-        <AreaChart width={400} height={150} data={activeUsages}>
-          <CartesianGrid stroke="#333" strokeDasharray="5 5" fill="#1C1C1C" />
-          <Area
-            fillOpacity={0.3}
-            fill="#8884d8"
-            stroke="#8884d8"
-            strokeWidth={3}
-            type="monotone"
-            dataKey="value"
-            isAnimationActive={false}
-          />
-          <XAxis stroke="transparent" height={0} />
-          <YAxis
-            domain={[0, activeView != "STORAGE" ? 100 : 1000]}
-            stroke="transparent"
-            width={0}
-          />
-        </AreaChart>
+        <Chart
+          title={activeView}
+          data={activeUsages}
+          y={activeView != "STORAGE" ? 100 : 1000}
+        />
       </div>
     </main>
   );

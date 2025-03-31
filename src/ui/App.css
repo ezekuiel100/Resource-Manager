@@ -1,15 +1,18 @@
 #root {
-  max-width: 1280px;
+  max-width: 1200px;
   padding: 2rem;
+  margin: auto;
 }
 
 main {
   display: flex;
-  gap: 4rem;
+  justify-content: center;
+  align-items: center;
+  gap: 3rem;
 }
 
 .selectOption {
-  width: 300px;
+  min-width: 8em;
   padding: 5px;
   margin: 1rem 0;
   background-color: #2c2c2c;
@@ -30,6 +33,17 @@ main {
   font-weight: 400;
 }
 
+.selectOptionChart {
+  height: 3rem;
+}
+
 .selectOptionChart * {
   cursor: pointer;
+}
+
+.mainGrid {
+  width: 70%;
+  min-width: 30rem;
+  height: 23rem;
+  min-height: 10rem;
 }
