@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain } from "electron";
 import path from "path";
 import { getStaticData, resources } from "./resourceManager.js";
+import { createMenu } from "./menu.js";
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -26,6 +27,7 @@ function createWindow() {
 
 app.whenReady().then(() => {
   createWindow();
+  createMenu();
 });
 
 app.on("window-all-closed", () => {
