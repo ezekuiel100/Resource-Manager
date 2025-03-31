@@ -15,6 +15,20 @@ function App() {
     });
   }, []);
 
+  let activeUsages;
+
+  switch (activeView) {
+    case "CPU":
+      activeUsages = cpuData;
+      break;
+    case "RAM":
+      activeUsages = ramData;
+      break;
+    case "STORAGE":
+      activeUsages = storageData;
+      break;
+  }
+
   return (
     <main>
       <div>
@@ -22,22 +36,25 @@ function App() {
           title={"CPU"}
           subTitle={staticData?.cpuModel}
           data={cpuData}
+          onClick={() => setActiveView("CPU")}
         />
         <SelectOption
           title={"RAM"}
           subTitle={staticData?.totalMemoryGB + " GB"}
           data={ramData}
+          onClick={() => setActiveView("RAM")}
         />
         <SelectOption
           title={"STORAGE"}
           subTitle={staticData?.totalStorage.toFixed() + " GB"}
           data={storageData}
           y={1000}
+          onClick={() => setActiveView("STORAGE")}
         />
       </div>
 
       <div className="mainGrid">
-        <AreaChart width={400} height={150} data={cpuData}>
+        <AreaChart width={400} height={150} data={activeUsages}>
           <CartesianGrid stroke="#333" strokeDasharray="5 5" fill="#1C1C1C" />
           <Area
             fillOpacity={0.3}
@@ -49,7 +66,11 @@ function App() {
             isAnimationActive={false}
           />
           <XAxis stroke="transparent" height={0} />
-          <YAxis domain={[0, 100]} stroke="transparent" width={0} />
+          <YAxis
+            domain={[0, activeView != "STORAGE" ? 100 : 1000]}
+            stroke="transparent"
+            width={0}
+          />
         </AreaChart>
       </div>
     </main>

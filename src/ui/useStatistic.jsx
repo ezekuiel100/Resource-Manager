@@ -19,7 +19,7 @@ export function useStatistic() {
 
   const cpuData = value.map((value) => ({ value: value.cpu }));
   const ramData = value.map((value) => ({ value: value.ram }));
-  const sotageData = value.map((value) => ({ value: value.disk }));
+  const storageData = value.map((value) => ({ value: value.disk }));
 
-  return { cpuData, ramData, sotageData };
+  return { cpuData, ramData, storageData };
 }
