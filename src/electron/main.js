@@ -1,7 +1,9 @@
-import { app, BrowserWindow, ipcMain } from "electron";
+import { app, BrowserWindow, ipcMain, Menu } from "electron";
 import path from "path";
 import { getStaticData, resources } from "./resourceManager.js";
 import { createMenu } from "./menu.js";
+
+// Menu.setApplicationMenu(null);  remove menu
 
 function createWindow() {
   const win = new BrowserWindow({
@@ -14,9 +16,8 @@ function createWindow() {
 
   if (process.env.NODE_ENV === "development") {
     win.loadURL("http://localhost:5123");
-    console.log("Janela carregada com sucesso ");
   } else {
-    win.loadFile(path.join(app.getAppPath(), "/dist-react/index.html"));
+    win.loadFile(path.join(app.getAppPath(), "dist/index.html"));
   }
 
   resources(win);

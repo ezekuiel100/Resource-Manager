@@ -3,11 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "src/electron/main",
+  "main": "src/electron/main.js",
   "scripts": {
     "dev:react": "vite",
     "start": "cross-env NODE_ENV=development electron .",
     "build": "vite build",
+    "build:electron": "electron-builder",
     "lint": "eslint .",
     "preview": "vite preview"
   },
@@ -25,10 +26,25 @@
     "@vitejs/plugin-react": "^4.3.4",
     "cross-env": "^7.0.3",
     "electron": "^35.1.2",
+    "electron-builder": "^26.0.12",
     "eslint": "^9.21.0",
     "eslint-plugin-react-hooks": "^5.1.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^15.15.0",
     "vite": "^6.2.0"
+  },
+  "build": {
+    "appId": "com.app.electron",
+    "productName": "App",
+    "win": {
+      "target": "nsis"
+    },
+    "files": [
+      "package.json",
+      "src/electron/**/*",
+      "dist/**/*",
+      "!node_modules/**/*"
+    ],
+    "asar": true
   }
 }
